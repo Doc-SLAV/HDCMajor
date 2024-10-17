@@ -287,23 +287,8 @@ class Tapper:
             if start and start.get('success', False):
                 logger.info(f"{self.session_name} | Start game <y>Puzzle</y>")
                 await asyncio.sleep(random.randint(5, 7))
-                logger.debug(f"{self.session_name} | Sending puzzle answer: {answer}")
-
                 response = await self.make_request(http_client, 'POST', endpoint="/durov/", json=answer)
-                if response:
-                    if 'correct' in response:
-                        logger.info(f"{self.session_name} | Puzzle result: {response['correct']} - Answers are correct!")
-                    else:
-                        logger.error(f"{self.session_name} | Unexpected response format: {response}")
-                    return response
-                else:
-                    logger.error(f"{self.session_name} | No response after sending puzzle answer.")
-            else:
-                logger.error(f"{self.session_name} | Failed to start puzzle game: {start}")
-        else:
-            logger.error(f"{self.session_name} | {response_status['status']}")
-
-        return response_status
+        return None
 
     @error_handler
     async def check_proxy(self, http_client: aiohttp.ClientSession) -> None:
@@ -311,7 +296,7 @@ class Tapper:
         ip = response.get('origin')
         logger.info(f"{self.session_name} | Proxy IP: {ip}")
     
-    #@error_handler
+    @error_handler
     async def run(self) -> None:
         if settings.USE_RANDOM_DELAY_IN_RUN:
                 random_delay = random.randint(settings.RANDOM_DELAY_IN_RUN[0], settings.RANDOM_DELAY_IN_RUN[1])
