@@ -26,7 +26,7 @@ global_answers = {}
 async def update_answers_periodically():
     global global_answers
     while True:
-        with open('answer.json', 'r') as file:
+        with open('answers.json', 'r') as file:
             global_answers = json.load(file)
         await asyncio.sleep(7200)  # Sleep for 2 hours
 
