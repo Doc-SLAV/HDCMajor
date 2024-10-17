@@ -26,7 +26,7 @@ global_answers = {}
 async def update_answers_periodically():
     global global_answers
     while True:
-        with open('answers.json', 'r') as file:
+        with open('answer.json', 'r') as file:
             global_answers = json.load(file)
         await asyncio.sleep(7200)  # Sleep for 2 hours
 
@@ -276,20 +276,34 @@ class Tapper:
                             logger.info(f"{self.session_name} | Completed YouTube task: <y>{task_title}</y>")
                             return True
         return False
-    
-    
+        
     @error_handler
     async def puvel_puzzle(self, http_client):
         global global_answers
-        
-        if global_answers.get('expires', 0) > int(time.time()):
-            answer = global_answers.get('answer')
+
+        if global_answers.get('answers') is not None:
+            answer = global_answers.get('answers')
             start = await self.make_request(http_client, 'GET', endpoint="/durov/")
             if start and start.get('success', False):
                 logger.info(f"{self.session_name} | Start game <y>Puzzle</y>")
                 await asyncio.sleep(random.randint(5, 7))
-                return await self.make_request(http_client, 'POST', endpoint="/durov/", json=answer)
-        return None
+                logger.debug(f"{self.session_name} | Sending puzzle answer: {answer}")
+
+                response = await self.make_request(http_client, 'POST', endpoint="/durov/", json=answer)
+                if response:
+                    if 'correct' in response:
+                        logger.info(f"{self.session_name} | Puzzle result: {response['correct']} - Answers are correct!")
+                    else:
+                        logger.error(f"{self.session_name} | Unexpected response format: {response}")
+                    return response
+                else:
+                    logger.error(f"{self.session_name} | No response after sending puzzle answer.")
+            else:
+                logger.error(f"{self.session_name} | Failed to start puzzle game: {start}")
+        else:
+            logger.error(f"{self.session_name} | {response_status['status']}")
+
+        return response_status
 
     @error_handler
     async def check_proxy(self, http_client: aiohttp.ClientSession) -> None:
