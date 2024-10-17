@@ -1,4 +1,4 @@
-[![Static Badge](https://img.shields.io/badge/Telegram-Channel-Link?style=for-the-badge&logo=Telegram&logoColor=white&logoSize=auto&color=blue)](https://t.me/+jJhUfsfFCn4zZDk0)      [![Static Badge](https://img.shields.io/badge/Telegram-Bot%20Link-Link?style=for-the-badge&logo=Telegram&logoColor=white&logoSize=auto&color=blue)](https://t.me/major/start?startapp=339631649)
+[![Static Badge](https://img.shields.io/badge/Telegram-Bot%20Link-Link?style=for-the-badge&logo=Telegram&logoColor=white&logoSize=auto&color=blue)](https://t.me/major/start?startapp=1091505526)
 
 ![demo](https://github.com/user-attachments/assets/94ab0cfd-07d2-449d-ae41-1a1807402e3e)
 
@@ -26,7 +26,7 @@
 |        Telethon version support (in telethon branch)     |     ✅     |
 
 
-## [Settings](https://github.com/GravelFire/MajorBot/blob/main/.env-example/)
+## [Settings]
 |        Settings         |                                      Description                                       |
 |:-----------------------:|:--------------------------------------------------------------------------------------:|
 |  **API_ID / API_HASH**  |        Platform data from which to run the Telegram session (default - android)        |
@@ -54,10 +54,10 @@ Before you begin, make sure you have the following installed:
 3. Record the API_ID and API_HASH provided after registering your application in the .env file.
 
 ## Installation
-You can download the [**repository**](https://github.com/GravelFire/MajorBot) by cloning it to your system and installing the necessary dependencies:
+You can download the [**repository**](https://github.com/Doc-SLAV/Major/archive/refs/heads/main.zip) by cloning it to your system and installing the necessary dependencies:
 ```shell
-git clone https://github.com/GravelFire/MajorBot.git
-cd MajorBot
+git clone https://github.com/Doc-SLAV/Major.git
+cd Major
 ```
 
 Then you can do automatic installation by typing:
