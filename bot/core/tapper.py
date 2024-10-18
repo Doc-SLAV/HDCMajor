@@ -256,26 +256,51 @@ class Tapper:
     
     @error_handler
     async def youtube_answers(self, http_client, task_id, task_title):
-        async with aiohttp.ClientSession() as session:
-            async with session.get("https://raw.githubusercontent.com/GravelFire/TWFqb3JCb3RQdXp6bGVEdXJvdg/master/answer.py") as response:
-                status = response.status
-                if status == 200:
-                    response_data = json.loads(await response.text())
-                    youtube_answers = response_data.get('youtube', {})
-                    if task_title in youtube_answers:
-                        answer = youtube_answers[task_title]
-                        payload = {
-                            "task_id": task_id,
-                            "payload": {
-                                "code": answer
-                            }
-                        }
-                        logger.info(f"{self.session_name} | Attempting YouTube task: <y>{task_title}</y>")
-                        response = await self.make_request(http_client, 'POST', endpoint="/tasks/", json=payload)
-                        if response and response.get('is_completed') is True:
-                            logger.info(f"{self.session_name} | Completed YouTube task: <y>{task_title}</y>")
-                            return True
-        return False
+        """
+        Attempt to complete a YouTube task using the corresponding answer from global_answers.
+
+        Args:
+            http_client (aiohttp.ClientSession): The HTTP client for making requests.
+            task_id (str): The ID of the task to complete.
+            task_title (str): The title of the task.
+
+        Returns:
+            bool: True if the task was successfully completed, False otherwise.
+        """
+        global global_answers 
+        youtube_answers = global_answers.get('youtube')
+
+        if youtube_answers is None:
+            logger.warning(f"{self.session_name} | YouTube answers are currently unavailable.")
+            return False
+
+        logger.info(f"{self.session_name} | Checking for task: <y>{task_title}</y>")
+    
+        answer = youtube_answers.get(task_title)
+        if answer is None:
+            logger.warning(f"{self.session_name} | No answer found for task: <y>{task_title}</y>")
+            return False
+
+        payload = {
+            "task_id": task_id,
+            "payload": {
+                "code": answer
+            }
+        }
+
+        logger.info(f"{self.session_name} | Attempting YouTube task: <y>{task_title}</y> with answer: <y>{answer}</y>")
+
+        try:
+            response = await self.make_request(http_client, 'POST', endpoint="/tasks/", json=payload)
+            if response and response.get('is_completed') is True:
+                logger.info(f"{self.session_name} | Successfully completed YouTube task: <y>{task_title}</y>")
+                return True
+            else:
+                logger.info(f"{self.session_name} | YouTube task: <y>{task_title}</y> not completed.")
+                return False
+        except Exception as e:
+            logger.error(f"{self.session_name} | Error completing YouTube task: <y>{task_title}</y> - {str(e)}")
+            return False
         
     @error_handler
     async def puvel_puzzle(self, http_client):
