@@ -54,10 +54,10 @@ Before you begin, make sure you have the following installed:
 3. Record the API_ID and API_HASH provided after registering your application in the .env file.
 
 ## Installation
-You can download the [**repository**](https://github.com/Doc-SLAV/Major/archive/refs/heads/main.zip) by cloning it to your system and installing the necessary dependencies:
+You can download the [**repository**](https://github.com/Doc-SLAV/HDCMajor/archive/refs/heads/main.zip) by cloning it to your system and installing the necessary dependencies:
 ```shell
-git clone https://github.com/Doc-SLAV/Major.git
-cd Major
+git clone https://github.com/Doc-SLAV/HDCMajor.git
+cd HDCMajor
 ```
 
 Then you can do automatic installation by typing:
@@ -84,9 +84,9 @@ python3 main.py
 
 You can also use arguments for quick start, for example:
 ```shell
-~/MajorBot >>> python3 main.py --action (1/2)
+~/HDCMajor >>> python3 main.py --action (1/2)
 # Or
-~/MajorBot >>> python3 main.py -a (1/2)
+~/HDCMajor >>> python3 main.py -a (1/2)
 
 # 1 - Run clicker
 # 2 - Creates a session
@@ -104,9 +104,9 @@ python main.py
 
 You can also use arguments for quick start, for example:
 ```shell
-~/MajorBot >>> python main.py --action (1/2)
+~/HDCMajor >>> python main.py --action (1/2)
 # Or
-~/MajorBot >>> python main.py -a (1/2)
+~/HDCMajor >>> python main.py -a (1/2)
 
 # 1 - Run clicker
 # 2 - Creates a session
